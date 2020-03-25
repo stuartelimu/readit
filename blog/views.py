@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.views.generic import ListView
+from .models import Article
 
-# Create your views here.
+
+class ArticleList(ListView):
+    model = Article
+    context_object_name = 'articles'
+    template_name = 'blog/blog.html'
+    paginate_by = 3
