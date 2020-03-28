@@ -1,5 +1,6 @@
 from django.views.generic import ListView, DetailView
 from .models import Article
+from taggit.models import Tag
 
 
 class ArticleList(ListView):
@@ -17,4 +18,5 @@ class ArticleDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['latest_articles'] = Article.objects.order_by("-created_at")[:3]
+        context['tags'] = Tag.objects.all()
         return context
