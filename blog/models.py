@@ -32,3 +32,20 @@ class Article(models.Model):
         return reverse('blog:article-detail', kwargs={
             'slug': self.slug,
         })
+
+
+class Comment(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    website = models.URLField(null=True, blank=True)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+    article = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.SET_NULL)
+
+    class Meta:
+        ordering = ('created_at',)
+
+    def __str__(self):
+        return f"Comment by {self.name} on {self.article}"

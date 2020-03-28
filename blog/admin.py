@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Article, Author
+from .models import Article, Author, Comment
 
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug')
@@ -9,3 +9,5 @@ class ArticleAdmin(admin.ModelAdmin):
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Author)
+admin.site.register(Comment)
+
