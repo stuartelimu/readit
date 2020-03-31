@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from decouple import config
 import django_heroku
+import cloudinary
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['readit-blog.herokuapp.com']
+ALLOWED_HOSTS = ['readit-blog.herokuapp.com', '127.0.0.1:8000']
 
 
 # Application definition
@@ -41,6 +42,8 @@ INSTALLED_APPS = [
 
     'blog',
     'taggit',
+
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -132,5 +135,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = 'media'
+
+cloudinary.config(
+    cloud_name = config('CLOUDINARY_CLOUD_NAME'),
+    api_key = config('CLOUDINARY_API_KEY'),
+    api_secret = config('CLOUDINARY_API_SECRET')
+)
 
 django_heroku.settings(locals())

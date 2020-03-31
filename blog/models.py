@@ -1,4 +1,7 @@
 from django.db import models
+import cloudinary
+from django.db.models.signals import pre_delete
+from cloudinary.models import CloudinaryField
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from taggit.managers import TaggableManager
@@ -7,7 +10,7 @@ User = get_user_model()
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avator = models.ImageField(upload_to='avators/')
+    avator = CloudinaryField('avator')
     bio = models.TextField()
 
     def __str__(self):
@@ -18,7 +21,7 @@ class Article(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
     slug = models.SlugField(max_length=120, unique=True)
-    image = models.ImageField(upload_to='articles/')
+    image = CloudinaryField('article')
     body = models.TextField()
     tags = TaggableManager()
     featured = models.BooleanField()
